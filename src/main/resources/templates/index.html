@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Webshop</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+<script>
+    function menuToggle() {
+        const burgerButton = document.getElementById('burger-button')
+        const navMenu = document.getElementById('nav-menu')
+
+        if (burgerButton.classList.contains('is-active')) {
+            burgerButton.classList.remove('is-active')
+            navMenu.classList.remove('is-active')
+        } else {
+            burgerButton.classList.add('is-active')
+            navMenu.classList.add('is-active')
+        }
+    }
+</script>
+
+<nav class="navbar">
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+            <i class="fa-solid fa-house title"></i>
+        </a>
+        <a role="button" id="burger-button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample"
+            onclick="menuToggle()"
+        >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="nav-menu" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item">Oldal1</a>
+            <a class="navbar-item">Oldal2</a>
+        </div>
+        <div class="navbar-end">
+            <a class="navbar-item">
+                <i class="fa-solid fa-cart-shopping"></i>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<section class="section">
+    <div class="grid">
+        <div th:each="item : ${items}" class="cell has-background-dark m-2 p-3 has-radius-small">
+            <div class="image is-128x128"> </div>
+            <h1 class="title is-size-4">
+                <a th:href="${'/item/' + item.getId()}" th:text="${item.getName()}"></a>
+            </h1>
+            <div class="subtitle">
+                $ <span th:text="${item.getPrice()}"></span>
+            </div>
+        </div>
+    </div>
+
+    <form method="post" action="/insertItem">
+        <input type="text" name="name">
+        <input type="text" name="price">
+        <input type="submit">
+    </form>
+
+    <!--<form method="post" action="/" th:action="@{/insertItem}" th:object="${item}">
+        <input type="text" th:field="*{id}">
+        <input type="text" th:field="*{name}">
+        <input type="text" th:field="*{price}">
+        <input type="submit">
+    </form>-->
+</section>
+</body>
+
+</html>
